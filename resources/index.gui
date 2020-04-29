@@ -1,0 +1,67 @@
+<svg id="body">    
+  <!--initial load-->
+  <svg id="selectorUI">   
+    <!--High Score-->
+    <use id="highScore" href="#marquee-text" height="40" fill="lightgreen" mode="1" width="100%" value="50">
+      <rect width="100%" height="100%" fill="black" opacity="0.2" />
+      <set href="group/separator" attributeName="width" to="0" />
+    </use>
+    
+    <use id="greetingText" href="#mixed-text-center-mid" height="100%" fill="fb-blue">
+      <set href="#header/text" attributeName="text-buffer" to="Ready to run?" />
+      <set href="#copy/text" attributeName="text-buffer" to="To begin, select a speed:" />
+    </use>    
+    
+    <!--30-60 button-->
+    <use id="btn3060" class="dialog-half-button-left" href="#square-button-neutral">
+      <set href="#text" attributeName="text-buffer" to="30-60" />
+      <set href="#text" attributeName="text-anchor" to="middle" />
+    </use>
+
+    <!--60-120 button-->
+    <use id="btn60120" class="dialog-half-button-right" href="#square-button-neutral">
+      <set href="#text" attributeName="text-buffer" to="60-120" />
+      <set href="#text" attributeName="text-anchor" to="middle" />
+    </use>  
+  </svg>
+  
+  <!--exercise screen-->
+  <svg id="counterUI" display="none">
+    <!--text-->
+    <text id="currStage" text-anchor="middle" class="text"></text>
+    <text id="counter" text-anchor="middle" class="text"></text>
+    <text id="iterations" text-anchor="middle" class="text">Iterations: 0</text>  
+
+    <!--pause button --> 
+    <use id="pauseBtn" href="#square-button" fill="indigo" class="text">
+      <set href="#text" id="buttonText" attributeName="text-buffer" to="Pause" />
+    </use> 
+    
+    <!--resume button -->
+    <use id="resumeBtn" class="dialog-half-button-left" href="#square-button-positive" display="none">
+      <set href="#text" attributeName="text-buffer" to="Resume" />
+      <set href="#text" attributeName="text-anchor" to="middle" />
+    </use>
+
+    <!--finish button-->
+    <use id="finishBtn" class="dialog-half-button-right" href="#square-button-neutral" display="none">
+      <set href="#text" attributeName="text-buffer" to="Finish" />
+      <set href="#text" attributeName="text-anchor" to="middle" />
+    </use>     
+  </svg>
+  
+  <!--exercise completion screen-->
+  <svg id="summaryUI" display="none">
+    
+    
+    
+    
+    <text text-length="70" id="summaryHeader">Great Work!</text>
+    <text text-length="70" id="summarySubHeader">Here's your workout summary:</text>
+    
+    <textarea text-length="500" class="summaryItems" id="statArea"></textarea>
+    
+    <textarea text-length="70" class="summaryItems" id="footer">See more details about this workout in the companion app.</textarea>
+    <text text-length="70" class="summaryItems" id="disclaimer"></text>
+  </svg>
+</svg>
