@@ -52,16 +52,13 @@
   
   <!--exercise completion screen-->
   <svg id="summaryUI" display="none">
-    
-    
-    
-    
-    <text text-length="70" id="summaryHeader">Great Work!</text>
-    <text text-length="70" id="summarySubHeader">Here's your workout summary:</text>
-    
-    <textarea text-length="500" class="summaryItems" id="statArea"></textarea>
-    
-    <textarea text-length="70" class="summaryItems" id="footer">See more details about this workout in the companion app.</textarea>
-    <text text-length="70" class="summaryItems" id="disclaimer"></text>
+    <use href="#tile-list" id="statArea">
+      <use href="#tile-list-header" class="tile-list-item">
+        <textarea id="headerTxt" text-length="100"></textarea>
+      </use>
+      <use href="#tile-list-item" class="tile-list-item">
+        <textarea id="footerTxt" text-length="100"></textarea>
+      </use>      
+    </use>
   </svg>
 </svg>

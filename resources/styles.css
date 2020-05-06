@@ -23,17 +23,34 @@
 }
 
 #pauseBtn {
-  text-length: 100;
+  text-length: 200;
   y: 180;
 }
 
 #highScore {
-  fill: white;
   y: 5%;
   font-size: 25;
   fill: lightgreen;
 }
 
-.text {  
-  width: 100%;
+.tile-list-item {
+  height: 100;
+} 
+
+#statArea {
+  fill: white;
+  font-size: 25;
+}
+
+#headerTxt {
+  fill: blue;
+  font-size: 25;
+  text-anchor: middle;
+  y: 5%;
+}
+
+#footerTxt {
+  fill: white;
+  font-size: 20;
+  text-anchor: middle;
 }

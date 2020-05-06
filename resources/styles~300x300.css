@@ -31,43 +31,29 @@
 }
 
 #highScore {
-  fill: white;
   y: 5%;
   font-size: 25;
   fill: lightgreen;
 }
 
-#summaryHeader {
-  font-size: 40;
-  x: 50%; 
-  text-anchor: middle;
-  fill: fb-blue;
-  y: 30;
-}
-
-#summarySubHeader {
-  font-size: 18;
-  x: 50%; 
-  text-anchor: middle;
-  fill: white;
-  y: 45;
-}
+.tile-list-item {
+  height: 180;
+} 
 
 #statArea {
   fill: white;
-  y: 60;
   font-size: 25;
 }
 
-#footer {
-  fill: yellow;
+#headerTxt {
+  fill: lightgreen;
+  font-size: 28;
+  text-anchor: middle;
+  y: 5%;
+}
+
+#footerTxt {
+  fill: white;
   font-size: 20;
-  display: none;
+  text-anchor: middle;
 }
-
-#disclaimer {
-  font-size: 15;
-  fill: white; 
-  display: none;
-}
-

@@ -1,6 +1,6 @@
 {
   "name": "60-120",
-  "version": "0.1.0",
+  "version": "3.0.0",
   "private": true,
   "license": "UNLICENSED",
   "devDependencies": {
@@ -10,7 +10,7 @@
   "fitbit": {
     "appUUID": "52a6ea9c-1564-41b4-a894-7e56df7b618b",
     "appType": "app",
-    "appDisplayName": "60 120",
+    "appDisplayName": "60-120",
     "iconFile": "resources/icon.png",
     "wipeColor": "#ffffff",
     "requestedPermissions": [
