@@ -1,6 +1,6 @@
 import document from "document";
 import vibration from "haptics";
-import fs from "fs";
+import fs, { exists } from "fs";
 import me from "appbit";
 import display from "display";
 import exercise from "exercise";
@@ -66,11 +66,12 @@ btn60120.onactivate = function () {
 
 function main() {
     //start tracking exercise if permissions exist    
-    if (me.permissions.granted("access_location") && me.permissions.granted("access_activity")) {
+    if (me.permissions.granted("access_location") && me.permissions.granted("access_activity") && 
+            me.permissions.granted("access_exercise")) {
         exercise.start("run", { gps: true });
     }
 
-    else if (me.permissions.granted("access_activity")) {
+    else if (me.permissions.granted("access_activity") && me.permissions.granted("access_exercise")) {
         exercise.start("run");
     }
 
@@ -80,15 +81,16 @@ function main() {
     currStage.text = firstStageVal;
 
     //set default values 
-    var timer = 1;
+    var timer = 0;
     var iterations = 0;
     var inFirstStage = true;
     var inSecondStage = false;
     var active = true;
+    var start, elapsedTime, pauseTime;
 
     //pause button
     pauseBtn.onactivate = function (evt) {
-        if (me.permissions.granted("access_activity")) {
+        if (me.permissions.granted("access_activity") && me.permissions.granted("access_exercise")) {
             exercise.pause();
         }
 
@@ -98,11 +100,13 @@ function main() {
         pauseBtn.style.display = "none";
         resumeBtn.style.display = "";
         finishBtn.style.display = "";
+
+        pauseTime = new Date().getTime();
     }
 
     //resume button
     resumeBtn.onactivate = function () {
-        if (me.permissions.granted("access_activity")) {
+        if (me.permissions.granted("access_activity") && me.permissions.granted("access_exercise")) {
             exercise.resume();
         }
 
@@ -112,11 +116,14 @@ function main() {
         pauseBtn.style.display = "";
         resumeBtn.style.display = "none";
         finishBtn.style.display = "none";
+
+        //account for time difference 
+        start += (new Date().getTime() - pauseTime);
     }
 
     //finish button 
     finishBtn.onactivate = function () {
-        if (me.permissions.granted("access_activity")) {
+        if (me.permissions.granted("access_activity") && me.permissions.granted("access_exercise")) {
             exercise.stop();
         }
 
@@ -126,55 +133,68 @@ function main() {
         populateFinalStats(iterations);
     }
 
-    function iterate() {
+    function tick() {
         if (active === true) {
-            //end of stage 1
-            if (inFirstStage === true && timer === firstStageVal) {
-                timer = 1;
-                inFirstStage = false;
-                inSecondStage = true;
+            var now = new Date().getTime() - start;
 
-                currStage.text = secondStageVal;
+            //~10th of a second
+            timer = Math.floor(now / 100) / 10;
 
-                display.on = true;
-                vibration.start("nudge-max");
-                vibration.stop();
-            }
+            //full second
+            if(Math.round(timer) == timer) { 
+                //update display 
+                counterTxt.text = timer;
+                
+                //end of stage 1
+                if (inFirstStage === true && timer >= firstStageVal) {
+                    timer = 0;
+                    inFirstStage = false;
+                    inSecondStage = true;
+    
+                    currStage.text = secondStageVal;
+    
+                    display.on = true;
+                    vibration.start("nudge-max");
+                    vibration.stop();
 
-            //end of stage 2
-            else if (inSecondStage === true && timer === secondStageVal) {
-                timer = 1;
-                inFirstStage = true;
-                inSecondStage = false;
-                ++iterations;
-
-                //update high score 
-                if (iterations > thisHighScore) {
-                    try {
-                        updateHighScores(iterations);
-                        iterationTxt.style.fill = "lightgreen";
-                    }
-
-                    catch (e) {
-                        console.log(e);
-                    }
+                    start = new Date().getTime();
                 }
 
-                currStage.text = firstStageVal;
-                iterationTxt.text = "Iterations: " + iterations;
+                //end of stage 2
+                else if (inSecondStage === true && timer >= secondStageVal) {
+                    timer = 0;
+                    inFirstStage = true;
+                    inSecondStage = false;
+                    ++iterations;
 
-                display.on = true;
-                vibration.start("nudge-max");
-                vibration.stop();
-            }
+                    //update high score 
+                    if (iterations > thisHighScore) {
+                        try {
+                            updateHighScores(iterations);
+                            iterationTxt.style.fill = "lightgreen";
+                        }
 
-            //update display 
-            ++timer;
-            counterTxt.text = timer;
+                        catch (e) {
+                            console.log(e);
+                        }
+                    }
+
+                    currStage.text = firstStageVal;
+                    iterationTxt.text = "Iterations: " + iterations;
+
+                    display.on = true;
+                    vibration.start("nudge-max");
+                    vibration.stop();
+
+                    start = new Date().getTime();
+                }
+            }  
         }
     }
 
-    setInterval(iterate, 1000);
+    start = new Date().getTime();
+    elapsedTime = '0.0';
+    setInterval(tick, 50);
 }
 
 var highScore = false;
@@ -206,6 +226,7 @@ function populateFinalStats(finalIterations) {
     var headerTxt = document.getElementById("headerTxt");
     var footerTxt = document.getElementById("footerTxt");
     var startOverBtn = document.getElementById("startOverBtn");
+    var doneBtn = document.getElementById("doneBtn");
 
     var header, footer;
 
@@ -217,16 +238,21 @@ function populateFinalStats(finalIterations) {
         header = "Nice work! You completed " + finalIterations + (finalIterations == 1 ? " iteration. " : " iterations. ");
 
         if (highScore) {
-            header += "You beat your previous high score! ";
+            header += "That's a new high score! ";
         }
     }
 
     //only shows this message if there is data to be viewed. if the user has opted to not share activity data,
     //there is no need to refer them to the app.
-    if (me.permissions.granted("access_activity")) {
-        footer = "Check the companion app for more details about this workout.";
+    if (me.permissions.granted("access_activity") && me.permissions.granted("access_exercise")) {
+        footer = 'This workout has been logged. Check the "Exercise" section of the companion app to see more details.';
     }
 
     headerTxt.text = header;
-    footerTxt.text = footer;
+    if (footer) footerTxt.text = footer;
+
+    //event handler for done button
+    doneBtn.onactivate = function() {
+        me.exit();
+    };
 }

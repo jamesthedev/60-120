@@ -29,7 +29,7 @@
   <svg id="counterUI" display="none">
     <!--text-->
     <text id="currStage" text-anchor="middle" class="text"></text>
-    <text id="counter" text-anchor="middle" class="text"></text>
+    <text id="counter" text-length="10" text-anchor="middle"></text>
     <text id="iterations" text-anchor="middle" class="text">Iterations: 0</text>  
 
     <!--pause button --> 
@@ -60,5 +60,9 @@
         <textarea id="footerTxt" text-length="100"></textarea>
       </use>      
     </use>
+    <!--done button-->
+    <use id="doneBtn" href="#square-button" fill="yellow" class="text">
+      <set href="#text" id="buttonText" attributeName="text-buffer" to="Done" />
+    </use> 
   </svg>
 </svg>

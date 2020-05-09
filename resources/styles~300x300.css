@@ -21,8 +21,8 @@
 #counter {
   fill: green;
   x: 50%;
-  y: 55%;
-  font-size: 100;  
+  y: 60%;
+  font-size: 140;  
 }
 
 #pauseBtn {
@@ -37,17 +37,17 @@
 }
 
 .tile-list-item {
-  height: 180;
+  height: 120;
 } 
 
 #statArea {
   fill: white;
-  font-size: 25;
+  font-size: 30;
 }
 
 #headerTxt {
   fill: lightgreen;
-  font-size: 28;
+  font-size: 25;
   text-anchor: middle;
   y: 5%;
 }
@@ -56,4 +56,8 @@
   fill: white;
   font-size: 20;
   text-anchor: middle;
+}
+
+#doneBtn {
+  y: 230;
 }
