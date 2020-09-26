@@ -8,7 +8,7 @@
     "@fitbit/sdk-cli": "^1.7.1"
   },
   "fitbit": {
-    "appUUID": "52a6ea9c-1564-41b4-a894-7e56df7b618b",
+    "appUUID": "446adbb9-9530-4bee-8372-7d1bc600d271",
     "appType": "app",
     "appDisplayName": "60-120",
     "iconFile": "resources/icon.png",

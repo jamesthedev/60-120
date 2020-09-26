@@ -245,7 +245,7 @@ function populateFinalStats(finalIterations) {
     //only shows this message if there is data to be viewed. if the user has opted to not share activity data,
     //there is no need to refer them to the app.
     if (me.permissions.granted("access_activity") && me.permissions.granted("access_exercise")) {
-        footer = 'This workout has been logged. Check the "Exercise" section of the companion app to see more details.';
+        footer = 'This workout has been logged. Check the "Exercise" section of the Fitbit smartphone app for more information.';
     }
 
     headerTxt.text = header;

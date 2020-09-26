@@ -57,7 +57,7 @@
         <textarea id="headerTxt" text-length="100"></textarea>
       </use>
       <use href="#tile-list-item" class="tile-list-item">
-        <textarea id="footerTxt" text-length="100"></textarea>
+        <textarea id="footerTxt" text-length="130"></textarea>
       </use>      
     </use>
     <!--done button-->
